@@ -1,7 +1,7 @@
 use board;
 use termbox;
 
-struct Game { board: board::Board, x: int, y: int, player: char }
+pub struct Game { board: board::Board, x: int, y: int, player: char }
 
 pub fn new() -> Game {
 	let mut game = Game { board: board::new(), x: 0, y: 0, player: 'X' };

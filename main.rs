@@ -1,3 +1,6 @@
+#[feature(link_args)];
+#[feature(globs)];
+
 pub mod termbox;
 pub mod board;
 pub mod game;

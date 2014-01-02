@@ -1,4 +1,4 @@
-struct Board { cells: [char, ..9] }
+pub struct Board { cells: [char, ..9] }
 
 pub fn new() -> Board { Board::new() }
 

@@ -1,5 +1,4 @@
 use std::libc::*;
-use std::vec::raw::to_ptr;
 use std::char::from_u32;
 #[deriving(Default)]
 pub struct cell { ch: char, fg: u16, bg: u16 }
@@ -154,69 +153,69 @@ pub static INPUT_ESC: int = 1;
 pub static INPUT_ALT: int = 2;
 
 pub fn init() -> int {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_init() as int }
 }
 pub fn shutdown() {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_shutdown() }
 }
 pub fn width() -> int {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_width() as int }
 }
 pub fn height() -> int {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_height() as int }
 }
 pub fn clear() {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_clear() }
 }
 pub fn set_clear_attributes(fg: u16, bg: u16) {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_set_clear_attributes(fg as uint16_t, bg as uint16_t) }
 }
 pub fn present() {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_present() }
 }
 pub fn set_cursor(cx: int, cy: int) {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_set_cursor(cx as c_int, cy as c_int ) }
 }
 pub fn _put_cell(x: int, y: int, cell: *tb_cell) {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_put_cell(x as c_int, y as c_int, cell) }
 }
 pub fn put_cell(x: int, y: int, cell: &cell) {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_put_cell(x as c_int, y as c_int, &to_tb_cell(cell)) }
 }
 pub fn change_cell(x: int, y: int, ch: char, fg: u16, bg: u16) {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_change_cell(x as c_int, y as c_int, ch as uint32_t, fg as uint16_t, bg as uint16_t) }
 }
 pub fn _blit(x: int, y: int, w: int, h: int, cells: *tb_cell) {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_blit(x as c_int, y as c_int, w as c_int, h as c_int, cells) }
 }
 pub fn blit(x: int, y: int, cells: ~[~[cell]]) {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	let w = cells[0].len() as c_int;
 	let h = cells.len() as c_int;
 	let ccells = cells.iter().flat_map(|v| v.iter()).map(|e| to_tb_cell(e)).to_owned_vec();
-	unsafe { tb_blit(x as c_int, y as c_int, w, h, to_ptr(ccells)) }
+	unsafe { tb_blit(x as c_int, y as c_int, w, h, ccells.as_ptr()) }
 }
 pub fn select_input_mode(mode: int) -> int {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_select_input_mode(mode as c_int) as int }
 }
 pub fn peek_event(event: &mut tb_event, timeout: int) -> int {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_peek_event(event, timeout as c_int) as int }
 }
 pub fn poll_event(event: &mut tb_event) -> int {
-	#[fixed_stack_segment]; #[inline(never)];
+	#[inline(never)];
 	unsafe { tb_poll_event(event) as int }
 }
